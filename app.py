@@ -74,8 +74,6 @@ def download():
    return send_file('course.json', as_attachment=True)
 
 
-os.remove("course.json")
-
 if __name__ == '__main__':
     app.run()  # running the flask app
 
