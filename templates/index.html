@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>File Upload</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+  </head>
+  <body>
+    <h1>iNeuron Course Upload</h1>
+    <form action="{{ url_for('upload_files') }}" class="dropzone">
+    </form>
+  <button onclick="download()">Download</button>
+  </body>
+    <script>
+      const download=async()=>{
+var response=await axios.get('/jsondumper');
+var data= response.data
+
+     function downloadJsonFile(data, filename){
+        // Creating a blob object from non-blob data using the Blob constructor
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        // Create a new anchor element
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename || 'download';
+        a.click();
+        a.remove();
+      }
+      downloadJsonFile(data,"Any");
+    }
+
+    </script>
+</html>
+
