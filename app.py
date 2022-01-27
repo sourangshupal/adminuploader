@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import numpy as np
 import json
 import datetime
+import glob
 
 from eventHandlers.courseAssignments import courseAssignments
 from eventHandlers.courseCirriculum import courseCirriculum
@@ -43,6 +44,9 @@ def upload_file():
 def uploadfile():
     if request.method == 'POST':  # check if the method is post
         f = request.files['file']  # get the file from the files object
+        cleandir = 'uploads'
+        for i in os.listdir(cleandir):
+            os.remove(os.path.join(cleandir, i))
         # Saving the file in the required destination
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
         filename = f.filename # this will secure the file
@@ -59,6 +63,9 @@ def uploadfile():
             "Course Videos": coursevids,
             "Course Assignments": courseassi,
         }
+        existingfiles = glob.glob('*.json', recursive=True)
+        for file in existingfiles:
+            os.remove(file)
         currentDatetime = datetime.datetime.now().strftime("%d%B%I%M%p")
         global json_filename
         json_filename = filenamewithoutextension + currentDatetime + ".json"
@@ -81,7 +88,3 @@ def download():
 
 if __name__ == '__main__':
     app.run()  # running the flask app
-
-
-# git config --global user.email "paulbindass@gmail.com"
-# 			git config --global user.name "Sourangshu Pal"
