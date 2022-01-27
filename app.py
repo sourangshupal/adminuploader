@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, send_file
 from werkzeug.utils import secure_filename
 import numpy as np
 import json
+import datetime
 
 from eventHandlers.courseAssignments import courseAssignments
 from eventHandlers.courseCirriculum import courseCirriculum
@@ -45,6 +46,8 @@ def uploadfile():
         # Saving the file in the required destination
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
         filename = f.filename # this will secure the file
+        filenamesplitter = filename.split(".")
+        filenamewithoutextension = filenamesplitter[0]
         filepath = "uploads/" + filename
         coursedesc = courseDescriptor(filename=filepath, sheetname="Course Basic Information")
         coursecirr = courseCirriculum(filename=filepath, sheetname="Course Landing Page Info")
@@ -56,9 +59,11 @@ def uploadfile():
             "Course Videos": coursevids,
             "Course Assignments": courseassi,
         }
+        currentDatetime = datetime.datetime.now().strftime("%d%B%I%M%p")
+        global json_filename
+        json_filename = filenamewithoutextension + currentDatetime + ".json"
         reader = json.dumps(course_json, cls=NpEncoder)
-        # Writing to sample.json
-        with open("course.json", "w") as outfile:
+        with open(json_filename, "w") as outfile:
             outfile.write(reader)
         return 'File uploaded & JSON created successfully'  # Display this message after uploading
 
@@ -71,7 +76,7 @@ def index():
 # Sending the file to the user
 @app.route('/download')
 def download():
-   return send_file('course.json', as_attachment=True)
+   return send_file(json_filename, as_attachment=True)
 
 
 if __name__ == '__main__':
