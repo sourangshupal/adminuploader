@@ -89,4 +89,5 @@ def download():
 
 
 if __name__ == '__main__':
+    global json_filename
     app.run()  # running the flask app
