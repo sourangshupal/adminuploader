@@ -23,7 +23,7 @@ if not os.path.exists(upload_folder):
 
 app.config['UPLOAD_FOLDER'] = upload_folder
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
-global json_filename
+
 
 class NpEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -69,6 +69,7 @@ def uploadfile():
         for file in existingfiles:
             os.remove(file)
         currentDatetime = datetime.datetime.now().strftime("%d%B%I%M%p")
+        global json_filename
         json_filename = filenamewithoutextension + currentDatetime + ".json"
         reader = json.dumps(course_json, cls=NpEncoder)
         with open(json_filename, "w") as outfile:
