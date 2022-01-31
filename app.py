@@ -61,7 +61,7 @@ def uploadfile():
         course_json = {
             "Course Basic Information": coursedesc,
             "Course Landing Page Info": coursecirr,
-            "Course_Features_Learn_Requirements" : features,
+            "Course_Features_learn_Requiremnts" : features,
             "Course Videos": coursevids,
             "Course Assignments": courseassi,
         }
