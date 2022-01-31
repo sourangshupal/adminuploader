@@ -54,12 +54,13 @@ def uploadfile():
         filenamewithoutextension = filenamesplitter[0]
         filepath = "uploads/" + filename
         coursedesc = courseDescriptor(filename=filepath, sheetname="Course Basic Information")
-        coursecirr = courseCirriculum(filename=filepath, sheetname="Course Landing Page Info")
+        coursecirr, features = courseCirriculum(filename=filepath, sheetname="Course Landing Page Info")
         coursevids = courseVideoResources(filename=filepath, sheetname="Course Videos")
         courseassi = courseAssignments(filename=filepath, sheetname="Course Assignments")
         course_json = {
             "Course Basic Information": coursedesc,
             "Course Landing Page Info": coursecirr,
+            "Course_Features_learn_Requiremnts" : features,
             "Course Videos": coursevids,
             "Course Assignments": courseassi,
         }
