@@ -7,6 +7,8 @@ feature_holder = []
 def courseCirriculum(filename, sheetname):
     data = excelReader(filename, sheetname)
     cleaned_data = data[['Features', 'Learn', 'Requirements']].dropna(how='all')
+    valueholder.clear()
+    feature_holder.clear()
     for i in data.index:
         mydict = {"Topic": data["Topics"][i], "Subtopic": data["Subtopics"][i]}
         valueholder.append(mydict)

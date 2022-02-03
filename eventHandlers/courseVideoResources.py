@@ -4,6 +4,7 @@ valueholder = []
 
 
 def courseVideoResources(filename, sheetname):
+    valueholder.clear()
     data = excelReader(filename, sheetname)
     for i in data.index:
         mydict = {

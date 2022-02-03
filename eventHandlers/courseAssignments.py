@@ -5,6 +5,7 @@ valueholder = []
 
 def courseAssignments(filename, sheetname):
     data = excelReader(filename, sheetname)
+    valueholder.clear()
     for i in data.index:
         mydict = {
             "Section Name": data["Section Name"][i],
